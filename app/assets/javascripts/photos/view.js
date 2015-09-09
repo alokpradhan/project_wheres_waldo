@@ -13,6 +13,7 @@ PHOTOPROCESSOR.view = (function(){
     $('#image').click( function(e) {
       // console.log("x " + e.pageX + " y " + e.pageY);
       // console.log(userList);
+      PHOTOPROCESSOR.controller.displayConfirmedBoxes();
       makeTags(e.pageX, e.pageY, userList, true);
     });
   }
@@ -43,7 +44,7 @@ PHOTOPROCESSOR.view = (function(){
   function renderTargetingBox(x, y) {
     var $box = $('<div>');
     $box.addClass('targeting-box');
-    $box.css({ left: x, top: y });
+    $box.css({ left: x-50, top: y-50 });
     $('#photo').append($box);
     PHOTOPROCESSOR.controller.setBox(x,y);
   }
@@ -59,7 +60,7 @@ PHOTOPROCESSOR.view = (function(){
     if (active) {
       $dropdown.attr('id', 'active');
     }
-    $dropdown.css({ left: x, top: y+100, height: users.length*25 });
+    $dropdown.css({ left: x-50, top: y+50, height: users.length*30 });
     $('#photo').append($dropdown);
     confirmSelection();
     highlight();
