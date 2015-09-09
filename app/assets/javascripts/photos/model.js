@@ -3,18 +3,21 @@ var PHOTOPROCESSOR = PHOTOPROCESSOR || {};
 PHOTOPROCESSOR.model = (function(){
 
 var tagBoxes = [];
-var dropDowns = [];
+var dropdowns = [];
+var users = [ 'Waldo', 'Wenda', 'Odlaw',
+              'Wima', 'Wizard Whitebeard', 'Ulf'
+            ];
 
 var createTagBox = function(x,y){
-  if(tagBoxes[tagBoxes.length-1].active === false) {
+  // if(tagBoxes[tagBoxes.length-1].active === false) {
     var newBox = new PHOTOPROCESSOR.targetingBox(x,y);
     tagBoxes.push(newBox);
-  }
+  // }
 };
 
 var createDropdown = function(x,y){
-  var newDropDown = new PHOTOPROCESSOR.dropdown(x,y);
-  dropDowns.push(newBox);
+  var newDropdown = new PHOTOPROCESSOR.dropdown(x,y);
+  dropdowns.push(newDropdown);
 };
 
 var setTagBox = function(){
@@ -28,10 +31,19 @@ var resetTagBox = function(){
 };
 
 var setDropdown = function(){
-  currentDropdown = dropDowns[tagDropdownes.length-1];
+  currentDropdown = dropdowns[tagDropdownes.length-1];
   currentDropdown.lock();
 };
 
+var getUsers = function(){
+  return users;
+};
+
+return {
+  createTagBox: createTagBox,
+  createDropdown: createDropdown,
+  getUsers: getUsers
+};
 
 })();
 
@@ -46,7 +58,7 @@ PHOTOPROCESSOR.targetingBox = function(x,y, size){
   };
 };
 
-PHOTOPROCESSOR.dropDown =function(x,y) {
+PHOTOPROCESSOR.dropdown = function(x,y) {
   this.posX = x;
   this.posY = y;
   // Every dropdown has a user when locked
