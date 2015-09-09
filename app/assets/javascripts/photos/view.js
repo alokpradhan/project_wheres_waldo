@@ -20,10 +20,10 @@ PHOTOPROCESSOR.view = (function(){
       // $target = e.target
       // console.log($(this));
       var id = e.target.id;
-      console.log('id ' + id);
-      PHOTOPROCESSOR.controller. ;
-      
-    })
+      // console.log('id ' + id);
+      console.log(userList[id]);
+      PHOTOPROCESSOR.controller.confirmSelection(userList[id]);
+    });
   }
 
   function highlight() {
@@ -33,7 +33,7 @@ PHOTOPROCESSOR.view = (function(){
 
     $('.dropdown').on('mouseleave', 'li', function(e) {
       $(e.target).css({'background': 'white'});
-    })
+    });
   }
 
   function makeTags(x, y) {
@@ -59,9 +59,13 @@ PHOTOPROCESSOR.view = (function(){
     $dropdown.addClass('dropdown');
     $dropdown.css({ left: x, top: y+100 });
     $('#photo').append($dropdown);
-    PHOTOPROCESSOR.controller.setDropdown(x,y);
+    // PHOTOPROCESSOR.controller.setDropdown(x,y);
     setMenuClickLisener();
     highlight();
+  }
+
+  function renderConfirmedBoxes(arr){
+
   }
 
   return {
