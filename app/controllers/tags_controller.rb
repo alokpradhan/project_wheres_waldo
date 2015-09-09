@@ -21,5 +21,6 @@ class TagsController < ApplicationController
   private
 
   def whitelisted_tag_params
-  end 
+  end
+
 end

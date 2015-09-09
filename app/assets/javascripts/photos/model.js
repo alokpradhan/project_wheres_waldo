@@ -16,21 +16,35 @@ var createTagBox = function(x,y){
 var confirmTagBox = function(user){
   activeTagBox.lock();
   setUserForConfirmedBox(user);
-  tagBoxes.push(activeTagBox);
+  tagBoxes.push(activeTagBox);  // setTagsFromBackend
   console.log(tagBoxes);
 };
 
-var getUsers = function(){
+var getUsers = function(){   // getUsersFromBackend
   return users;
 };
 
-var getTagBoxes = function(){
+var getTagBoxes = function(){    // getTagsFromBackend
+  getTags();
   return tagBoxes;
 };
 
 var setUserForConfirmedBox = function(user){
   activeTagBox.user = user;
 };
+
+// AJAX request to get Tags
+function getTags() {
+  $.ajax({
+    url: 'tags',
+    method: 'get',
+    dataType: 'json',
+    complete: function(json) {
+      // console.log(json);
+      tagBoxes = json;
+    }
+  });
+}
 
 return {
   createTagBox: createTagBox,
@@ -40,6 +54,25 @@ return {
 };
 
 })();
+
+
+// AJAX requests
+function setTags(x, y, user_id) {
+  $.ajax({
+    url: 'tags',
+    method: 'post',
+    data: JSON.stringify({positionX: x, positionY: y, user_id: user_id}),
+    dataType: 'json',
+    contentType: 'application/json',
+    success: function() {
+      console.log( 'sucess' );
+      getTags();
+    }
+  });
+}
+
+
+// Constructor for targeting box
 
 PHOTOPROCESSOR.targetingBox = function(x,y,size){
   this.posX = x;
