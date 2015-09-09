@@ -13,6 +13,10 @@ PHOTOPROCESSOR.controller = (function(model, view, $){
 
   function confirmSelection(user){
     PHOTOPROCESSOR.model.confirmTagBox(user);
+    displayConfirmedBoxes();
+  }
+
+  function displayConfirmedBoxes() {
     PHOTOPROCESSOR.view.renderConfirmedBoxes(
       PHOTOPROCESSOR.model.getTagBoxes());
   }
@@ -20,7 +24,8 @@ PHOTOPROCESSOR.controller = (function(model, view, $){
   return {
     init: init,
     setBox: setBox,
-    confirmSelection: confirmSelection
+    confirmSelection: confirmSelection,
+    displayConfirmedBoxes: displayConfirmedBoxes
   };
 })(PHOTOPROCESSOR.model, PHOTOPROCESSOR.view, $);
 
