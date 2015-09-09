@@ -4,8 +4,6 @@ PHOTOPROCESSOR.model = (function(){
 
 var tagBoxes = [];
 var activeTagBox = '';
-var dropdowns = [];
-var activeDropdown = '';
 
 var users = [ 'Waldo', 'Wenda', 'Odlaw',
               'Wima', 'Wizard Whitebeard', 'Ulf'
@@ -15,10 +13,6 @@ var createTagBox = function(x,y){
   activeTagBox = new PHOTOPROCESSOR.targetingBox(x,y);
 };
 
-// var createDropdown = function(x,y){
-//   activeDropdown = new PHOTOPROCESSOR.dropdown(x,y);
-// };
-
 var confirmTagBox = function(user){
   activeTagBox.lock();
   setUserForConfirmedBox(user);
@@ -26,13 +20,12 @@ var confirmTagBox = function(user){
   console.log(tagBoxes);
 };
 
-// var confirmDropdown = function(){
-//   activeDropdown.lock();
-//   dropdowns.push(activeDropdown);
-// };
-
 var getUsers = function(){
   return users;
+};
+
+var getTagBoxes = function(){
+  return tagBoxes;
 };
 
 var setUserForConfirmedBox = function(user){
@@ -41,10 +34,9 @@ var setUserForConfirmedBox = function(user){
 
 return {
   createTagBox: createTagBox,
-  // createDropdown: createDropdown,
   confirmTagBox: confirmTagBox,
-  // confirmDropdown: confirmDropdown,
-  getUsers: getUsers
+  getUsers: getUsers,
+  getTagBoxes: getTagBoxes
 };
 
 })();
@@ -54,22 +46,10 @@ PHOTOPROCESSOR.targetingBox = function(x,y,size){
   this.posY = y;
   this.size = 100;
   this.active = true;
-  // Every dropdown has a user when locked
+  // Every box has a user when locked
   this.user = '';
 
   this.lock = function() {
     this.active = this.active ? false : true;
   };
-
-};
-
-PHOTOPROCESSOR.dropdown = function(x,y) {
-  this.posX = x;
-  this.posY = y;
-  this.active = true;
-
-  this.lock = function() {
-    this.active = false;
-  };
-
 };

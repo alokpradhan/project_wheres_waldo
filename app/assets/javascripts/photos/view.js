@@ -11,16 +11,13 @@ PHOTOPROCESSOR.view = (function(){
   function setClickListener(){
     $('#image').click( function(e) {
       console.log("x " + e.pageX + " y " + e.pageY);
-      makeTags(e.pageX, e.pageY);
+      makeTags(e.pageX, e.pageY, userList);
     });
   }
 
-  function setMenuClickLisener() {
+  function confirmSelection() {
     $('.dropdown').click(function(e){
-      // $target = e.target
-      // console.log($(this));
       var id = e.target.id;
-      // console.log('id ' + id);
       console.log(userList[id]);
       PHOTOPROCESSOR.controller.confirmSelection(userList[id]);
     });
@@ -36,9 +33,9 @@ PHOTOPROCESSOR.view = (function(){
     });
   }
 
-  function makeTags(x, y) {
+  function makeTags(x, y, users) {
     renderTargetingBox(x, y);
-    renderDropdown(x, y);
+    renderDropdown(x, y, users);
   }
 
   function renderTargetingBox(x, y) {
@@ -49,26 +46,30 @@ PHOTOPROCESSOR.view = (function(){
     PHOTOPROCESSOR.controller.setBox(x,y);
   }
 
-  function renderDropdown(x, y) {
+  function renderDropdown(x, y, users) {
     var $dropdown = $('<div>');
-    for (var i = 0; i < userList.length; i++){
-      $listItem = $('<li>').text(userList[i]);
+    for (var i = 0; i < users; i++){
+      $listItem = $('<li>').text(users[i]);
       $listItem.attr('id', i);
       $dropdown.append($listItem);
     }
     $dropdown.addClass('dropdown');
     $dropdown.css({ left: x, top: y+100 });
     $('#photo').append($dropdown);
-    // PHOTOPROCESSOR.controller.setDropdown(x,y);
-    setMenuClickLisener();
+    confirmSelection();
     highlight();
   }
 
   function renderConfirmedBoxes(arr){
-
+    $('.targeting-box').remove();
+    $('.dropdown').remove();
+    for(var i=0; i< arr.length; i++){
+      makeTags(arr[i].posX, arr[i].posY, [arr[i].user]);
+    }
   }
 
   return {
-    init: init
+    init: init,
+    renderConfirmedBoxes: renderConfirmedBoxes
   };
 })();
