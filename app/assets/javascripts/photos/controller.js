@@ -3,8 +3,13 @@ var PHOTOPROCESSOR = PHOTOPROCESSOR || {};
 PHOTOPROCESSOR.controller = (function(model, view, $){
 
   function init() {
-    // console.log(view);
-    PHOTOPROCESSOR.view.init(PHOTOPROCESSOR.model.getUsers());
+    users();
+  }
+
+  function users(){
+    PHOTOPROCESSOR.model.getUserPromise().done(function(){
+      PHOTOPROCESSOR.view.init(PHOTOPROCESSOR.model.getUsers());
+    });
   }
 
   function setBox(x,y){
@@ -17,11 +22,11 @@ PHOTOPROCESSOR.controller = (function(model, view, $){
   }
 
   function displayConfirmedBoxes() {
-    PHOTOPROCESSOR.model.getPromise().done(function(){
-      console.log(PHOTOPROCESSOR.model.getTagBoxes());    
+    PHOTOPROCESSOR.model.getTagPromise().done(function(){
+      // console.log(PHOTOPROCESSOR.model.getTagBoxes());
       PHOTOPROCESSOR.view.renderConfirmedBoxes(
         PHOTOPROCESSOR.model.getTagBoxes());
-    })
+    });
   }
 
   return {

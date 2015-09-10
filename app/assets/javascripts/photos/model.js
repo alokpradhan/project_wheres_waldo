@@ -26,11 +26,16 @@ var getUsers = function(){   // getUsersFromBackend
   return users;
 };
 
+var getUserPromise = function(){
+  var userPromise = getUserList();
+  return userPromise;
+};
+
 var getTagBoxes = function(){
   return tagBoxes;
 };
 
-var getPromise = function(){    // getTagsFromBackend
+var getTagPromise = function(){    // getTagsFromBackend
   var myPromise = getTags();
   return myPromise;
 };
@@ -52,7 +57,7 @@ function getTags() {
   }).promise();
 }
 
-// AJAX requests
+// AJAX request to post new Tags
 function setTags(box) {
   $.ajax({
     url: 'tags',
@@ -67,12 +72,26 @@ function setTags(box) {
   });
 }
 
+// AJAX request to get Users
+function getUserList() {
+  return $.ajax({
+    url: 'users',
+    method: 'get',
+    dataType: 'json',
+    success: function(json) {
+      // console.log(json);
+      users = json;
+    }
+  }).promise();
+}
+
 return {
   createTagBox: createTagBox,
   confirmTagBox: confirmTagBox,
   getUsers: getUsers,
+  getUserPromise: getUserPromise,
   getTagBoxes: getTagBoxes,
-  getPromise: getPromise
+  getTagPromise: getTagPromise
 };
 
 })();

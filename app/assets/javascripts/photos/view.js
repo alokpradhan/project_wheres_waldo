@@ -27,7 +27,7 @@ PHOTOPROCESSOR.view = (function(){
   function confirmSelection() {
     $('#active-menu').click(function(e){
       var id = e.target.id;
-      console.log(userList[id]);
+      // console.log(userList[id]);
       PHOTOPROCESSOR.controller.confirmSelection(userList[id]);
     });
   }
@@ -60,8 +60,10 @@ PHOTOPROCESSOR.view = (function(){
 
   function renderDropdown(x, y, users, active) {
     var $dropdown = $('<div>');
+    // console.log(users);
     for (var i = 0; i < users.length; i++){
-      $listItem = $('<li>').text(users[i]);
+      // console.log(users[i].name);
+      $listItem = $('<li>').text(users[i].name);
       $listItem.attr('id', i);
       $dropdown.append($listItem);
     }
@@ -75,7 +77,16 @@ PHOTOPROCESSOR.view = (function(){
     highlight();
   }
 
-  function removeConfirmedBoxes() {    
+  function convertUserIDtoName(id) {
+    for (var i = 0; i < userList.length; i++){
+      console.log("Users list: " + userList[i].id);
+      if(userList[i].id === id){
+        return userList[i];
+      }
+    }
+  }
+
+  function removeConfirmedBoxes() {
     $('.targeting-box').remove();
     $('.dropdown').remove();
   }
@@ -83,7 +94,8 @@ PHOTOPROCESSOR.view = (function(){
   function renderConfirmedBoxes(arr){
     removeConfirmedBoxes();
     for(var i=0; i< arr.length; i++){
-      makeTags(arr[i].positionX, arr[i].positionY, [arr[i].user_id], false);
+      // console.log("This is Working: " + convertUserIDtoName(arr[i].user_id));
+      makeTags(arr[i].positionX, arr[i].positionY, [(arr[i].user_id)], false);
     }
   }
 
