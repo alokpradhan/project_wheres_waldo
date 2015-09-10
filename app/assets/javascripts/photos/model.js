@@ -16,7 +16,9 @@ var createTagBox = function(x,y){
 var confirmTagBox = function(user){
   activeTagBox.lock();
   setUserForConfirmedBox(user);
-  tagBoxes.push(activeTagBox);  // setTagsFromBackend
+  // tagBoxes.push(activeTagBox);  // setTagsFromBackend
+  setTags(activeTagBox);
+
   console.log(tagBoxes);
 };
 
@@ -24,44 +26,38 @@ var getUsers = function(){   // getUsersFromBackend
   return users;
 };
 
-var getTagBoxes = function(){    // getTagsFromBackend
-  getTags();
+var getTagBoxes = function(){
   return tagBoxes;
 };
 
+var getPromise = function(){    // getTagsFromBackend
+  var myPromise = getTags();
+  return myPromise;
+};
+
 var setUserForConfirmedBox = function(user){
-  activeTagBox.user = user;
+  activeTagBox.user = users.indexOf(user);
 };
 
 // AJAX request to get Tags
 function getTags() {
-  $.ajax({
+  return $.ajax({
     url: 'tags',
     method: 'get',
     dataType: 'json',
-    complete: function(json) {
+    success: function(json) {
       // console.log(json);
       tagBoxes = json;
     }
-  });
+  }).promise();
 }
 
-return {
-  createTagBox: createTagBox,
-  confirmTagBox: confirmTagBox,
-  getUsers: getUsers,
-  getTagBoxes: getTagBoxes
-};
-
-})();
-
-
 // AJAX requests
-function setTags(x, y, user_id) {
+function setTags(box) {
   $.ajax({
     url: 'tags',
     method: 'post',
-    data: JSON.stringify({positionX: x, positionY: y, user_id: user_id}),
+    data: JSON.stringify({positionX: box.posX, positionY: box.posY, user_id: box.user}),
     dataType: 'json',
     contentType: 'application/json',
     success: function() {
@@ -70,6 +66,18 @@ function setTags(x, y, user_id) {
     }
   });
 }
+
+return {
+  createTagBox: createTagBox,
+  confirmTagBox: confirmTagBox,
+  getUsers: getUsers,
+  getTagBoxes: getTagBoxes,
+  getPromise: getPromise
+};
+
+})();
+
+
 
 
 // Constructor for targeting box

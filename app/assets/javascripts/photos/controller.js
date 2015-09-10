@@ -17,8 +17,11 @@ PHOTOPROCESSOR.controller = (function(model, view, $){
   }
 
   function displayConfirmedBoxes() {
-    PHOTOPROCESSOR.view.renderConfirmedBoxes(
-      PHOTOPROCESSOR.model.getTagBoxes());
+    PHOTOPROCESSOR.model.getPromise().done(function(){
+      console.log(PHOTOPROCESSOR.model.getTagBoxes());    
+      PHOTOPROCESSOR.view.renderConfirmedBoxes(
+        PHOTOPROCESSOR.model.getTagBoxes());
+    })
   }
 
   return {

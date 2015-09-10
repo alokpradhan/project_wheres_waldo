@@ -8,7 +8,7 @@ class TagsController < ApplicationController
   end
 
   def create
-    @tag = Tag.new(params)
+    @tag = Tag.new(whitelisted_tag_params)
     respond_to do |format|
       if @tag.save
         format.json { render json: @tag }
@@ -21,6 +21,7 @@ class TagsController < ApplicationController
   private
 
   def whitelisted_tag_params
+    params.require(:tag).permit(:positionX, :positionY, :user_id)
   end
 
 end

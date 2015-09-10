@@ -13,13 +13,19 @@ PHOTOPROCESSOR.view = (function(){
     $('#image').click( function(e) {
       // console.log("x " + e.pageX + " y " + e.pageY);
       // console.log(userList);
-      PHOTOPROCESSOR.controller.displayConfirmedBoxes();
+      // PHOTOPROCESSOR.controller.displayConfirmedBoxes();
+      removeActiveBox();
       makeTags(e.pageX, e.pageY, userList, true);
     });
   }
 
+  function removeActiveBox() {
+    $('#active-box').remove();
+    $('#active-menu').remove();
+  }
+
   function confirmSelection() {
-    $('#active').click(function(e){
+    $('#active-menu').click(function(e){
       var id = e.target.id;
       console.log(userList[id]);
       PHOTOPROCESSOR.controller.confirmSelection(userList[id]);
@@ -27,24 +33,27 @@ PHOTOPROCESSOR.view = (function(){
   }
 
   function highlight() {
-    $('#active').on('mouseenter', 'li', function(e) {
+    $('#active-menu').on('mouseenter', 'li', function(e) {
       $(e.target).css({'background': 'red'});
     });
 
-    $('#active').on('mouseleave', 'li', function(e) {
+    $('#active-menu').on('mouseleave', 'li', function(e) {
       $(e.target).css({'background': 'white'});
     });
   }
 
   function makeTags(x, y, users, active) {
-    renderTargetingBox(x, y);
+    renderTargetingBox(x, y, active);
     renderDropdown(x, y, users, active);
   }
 
-  function renderTargetingBox(x, y) {
+  function renderTargetingBox(x, y, active) {
     var $box = $('<div>');
     $box.addClass('targeting-box');
     $box.css({ left: x-50, top: y-50 });
+    if (active) {
+      $box.attr('id', 'active-box');
+    }
     $('#photo').append($box);
     PHOTOPROCESSOR.controller.setBox(x,y);
   }
@@ -58,7 +67,7 @@ PHOTOPROCESSOR.view = (function(){
     }
     $dropdown.addClass('dropdown');
     if (active) {
-      $dropdown.attr('id', 'active');
+      $dropdown.attr('id', 'active-menu');
     }
     $dropdown.css({ left: x-50, top: y+50, height: users.length*30 });
     $('#photo').append($dropdown);
@@ -74,7 +83,7 @@ PHOTOPROCESSOR.view = (function(){
   function renderConfirmedBoxes(arr){
     removeConfirmedBoxes();
     for(var i=0; i< arr.length; i++){
-      makeTags(arr[i].posX, arr[i].posY, [arr[i].user], false);
+      makeTags(arr[i].positionX, arr[i].positionY, [arr[i].user_id], false);
     }
   }
 
