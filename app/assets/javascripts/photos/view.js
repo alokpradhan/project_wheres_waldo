@@ -5,16 +5,13 @@ PHOTOPROCESSOR.view = (function(){
 
   function init(users) {
     userList = users;
-    console.log(userList);
+    // console.log(userList);
     setClickListener();
     hoverOnPhoto();
   }
 
   function setClickListener(){
     $('#image').click( function(e) {
-      // console.log("x " + e.pageX + " y " + e.pageY);
-      // console.log(userList);
-      // PHOTOPROCESSOR.controller.displayConfirmedBoxes();
       removeActiveBox();
       makeTags(e.pageX, e.pageY, userList, true);
     });
@@ -28,7 +25,6 @@ PHOTOPROCESSOR.view = (function(){
   function confirmSelection() {
     $('#active-menu').click(function(e){
       var id = e.target.id;
-      // console.log(userList[id]);
       PHOTOPROCESSOR.controller.confirmSelection(userList[id]);
     });
   }
@@ -80,7 +76,7 @@ PHOTOPROCESSOR.view = (function(){
 
   function convertUserIDtoName(id) {
     for (var i = 0; i < userList.length; i++){
-      console.log("Users list: " + userList[i].id);
+      // console.log("Users list: " + userList[i].id);
       if(userList[i].id === id){
         return userList[i];
       }
@@ -95,9 +91,8 @@ PHOTOPROCESSOR.view = (function(){
   function renderConfirmedBoxes(arr){
     removeConfirmedBoxes();
     for(var i=0; i< arr.length; i++){
-      // console.log("This is Working: " + convertUserIDtoName(arr[i].user_id));
-      console.log(arr[i]);
-      makeTags(arr[i].positionX, arr[i].positionY, [convertUserIDtoName(arr[i].user_id+1)], false);
+      makeTags(arr[i].positionX, arr[i].positionY,
+        [convertUserIDtoName(arr[i].user_id+1)], false);
     } // CHECK: WHY IS THE USER ID SAVING AS 1 LESS?
   }
 

@@ -1,12 +1,12 @@
 var PHOTOPROCESSOR = PHOTOPROCESSOR || {};
 
-PHOTOPROCESSOR.controller = (function(model, view, $){
+PHOTOPROCESSOR.controller = (function(){
 
   function init() {
-    users();
+    sendUserListToView();
   }
 
-  function users(){
+  function sendUserListToView(){
     PHOTOPROCESSOR.model.getUserPromise().done(function(){
       PHOTOPROCESSOR.view.init(PHOTOPROCESSOR.model.getUsers());
     });
@@ -23,7 +23,6 @@ PHOTOPROCESSOR.controller = (function(model, view, $){
 
   function displayConfirmedBoxes() {
     PHOTOPROCESSOR.model.getTagPromise().done(function(){
-      // console.log(PHOTOPROCESSOR.model.getTagBoxes());
       PHOTOPROCESSOR.view.renderConfirmedBoxes(
         PHOTOPROCESSOR.model.getTagBoxes());
     });
@@ -35,7 +34,7 @@ PHOTOPROCESSOR.controller = (function(model, view, $){
     confirmSelection: confirmSelection,
     displayConfirmedBoxes: displayConfirmedBoxes
   };
-})(PHOTOPROCESSOR.model, PHOTOPROCESSOR.view, $);
+})();
 
 $(document).ready(function(){
   PHOTOPROCESSOR.controller.init();

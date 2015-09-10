@@ -4,10 +4,7 @@ PHOTOPROCESSOR.model = (function(){
 
 var tagBoxes = [];
 var activeTagBox = '';
-
-var users = [ 'Waldo', 'Wenda', 'Odlaw',
-              'Wima', 'Wizard Whitebeard', 'Ulf'
-            ];
+var users = [];
 
 var createTagBox = function(x,y){
   activeTagBox = new PHOTOPROCESSOR.targetingBox(x,y);
@@ -16,13 +13,11 @@ var createTagBox = function(x,y){
 var confirmTagBox = function(user){
   activeTagBox.lock();
   setUserForConfirmedBox(user);
-  // tagBoxes.push(activeTagBox);  // setTagsFromBackend
+  // setTagsFromBackend
   setTags(activeTagBox);
-
-  console.log(tagBoxes);
 };
 
-var getUsers = function(){   // getUsersFromBackend
+var getUsers = function(){
   return users;
 };
 
@@ -35,7 +30,7 @@ var getTagBoxes = function(){
   return tagBoxes;
 };
 
-var getTagPromise = function(){    // getTagsFromBackend
+var getTagPromise = function(){
   var myPromise = getTags();
   return myPromise;
 };
@@ -51,7 +46,6 @@ function getTags() {
     method: 'get',
     dataType: 'json',
     success: function(json) {
-      // console.log(json);
       tagBoxes = json;
     }
   }).promise();
@@ -97,10 +91,7 @@ return {
 })();
 
 
-
-
 // Constructor for targeting box
-
 PHOTOPROCESSOR.targetingBox = function(x,y,size){
   this.posX = x;
   this.posY = y;
