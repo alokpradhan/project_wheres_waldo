@@ -5,6 +5,7 @@ PHOTOPROCESSOR.view = (function(){
 
   function init(users) {
     userList = users;
+    console.log(userList);
     setClickListener();
     hoverOnPhoto();
   }
@@ -95,8 +96,9 @@ PHOTOPROCESSOR.view = (function(){
     removeConfirmedBoxes();
     for(var i=0; i< arr.length; i++){
       // console.log("This is Working: " + convertUserIDtoName(arr[i].user_id));
-      makeTags(arr[i].positionX, arr[i].positionY, [(arr[i].user_id)], false);
-    }
+      console.log(arr[i]);
+      makeTags(arr[i].positionX, arr[i].positionY, [convertUserIDtoName(arr[i].user_id+1)], false);
+    } // CHECK: WHY IS THE USER ID SAVING AS 1 LESS?
   }
 
   function hoverOnPhoto() {
